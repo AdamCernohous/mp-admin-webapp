@@ -1,0 +1,46 @@
+.form-container {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-container-item {
+  width: 40%;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-select select {
+  width: 100%;
+}
+
+.form-request h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: rgb(235, 219, 0);
+}
+
+.form-request p {
+  text-align: left;
+  margin-bottom: 2px;
+}
+
+.form-request input ,textarea {
+  width: 100%;
+}
+
+.form-request textarea {
+  height: 100px;
+}
+
+.form-request button {
+  width: 100%;
+  margin-top: 10px;
+}
