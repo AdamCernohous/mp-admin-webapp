@@ -6,24 +6,35 @@ import axios from "axios";
 
 function App() {
   const [selected, setSelected] = useState(0);
+  const [userToken, setUserToken] = useState();
+
+  useEffect(() => {
+    axios.post('http://localhost:8080/api/User/Login', {
+      userName: "admin",
+      password: "admin"
+    })
+      .then(res => setUserToken(res.data.accessToken));
+  },[]);
 
   return (
     <div className="App">
-      <h1>Tourist App admin console.</h1>
+      <h1>Terrorist App admin console.</h1>
       <SliderMenu
         selected={selected}
         setSelected={setSelected}
       />
-      <LocationForm
+      <EditForm
         selected={selected}
+        userToken={userToken}
       />
     </div>
   );
 }
 
-const LocationForm = ({selected}) => {
+const EditForm = ({selected, userToken}) => {
   var url = 'http://localhost:8080/api/Castle/AllCastles';
   var updateUrl = 'http://localhost:8080/api/Castle/AllCastles';
+  var pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
 
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,33 +96,66 @@ const LocationForm = ({selected}) => {
     switch(selected){
       case 0:
         url = 'http://localhost:8080/api/Castle/AllCastles';
+        pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
         break;
       case 1:
         url = 'http://localhost:8080/api/Church/AllChurches';
+        pictureUrl = 'http://localhost:8080/api/Church/Picture/Upload';
         break;
       case 2:
         url = 'http://localhost:8080/api/Museum/AllMuseums';
+        pictureUrl = 'http://localhost:8080/api/Museum/Picture/Upload';
         break;
       case 3:
         url = 'http://localhost:8080/api/Outlook/AllOutlooks';
+        pictureUrl = 'http://localhost:8080/api/Outlook/Picture/Upload';
         break;
       case 4:
         url = 'http://localhost:8080/api/Park/AllParks';
+        pictureUrl = 'http://localhost:8080/api/Park/Picture/Upload';
         break;
       case 5:
         url = 'http://localhost:8080/api/Restaurant/AllRestaurants';
+        pictureUrl = 'http://localhost:8080/api/Restaurant/Picture/Upload';
         break;
       default:
         url = 'http://localhost:8080/api/Castle/AllCastles';
+        pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
         break;
     }
   }
+
+  const handleFileChange = (file) => {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      const byteArray = new Uint8Array(reader.result);
+
+      const encodedString = new TextEncoder().encode(byteArray);
+
+      console.log(encodedString);
+    
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+      axios.post(pictureUrl,{
+        castleId: Object.values(editedLocation)[0],
+        picture: encodedString
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+        })
+        .catch((error) => {
+          console.warn(error)
+        });
+    };
+  };
 
   return (
     <div className="form-container">
       <div className="form-container-item left">
         <div className="form-select">
           <select onChange={e => setSelectedValue(e.target.value)}>
+            <option value={0}>Vyberte lokaci</option>
             {
               response.map((location) => {
                 return <option value={Object.values(location)[0]}>{location && location.name}</option>
@@ -148,7 +192,17 @@ const LocationForm = ({selected}) => {
           <button onClick={updateData}>UPDATE</button>
         </div>
       </div>
-      <div className="form-container-item">
+      <div className="form-container-item right">
+        <div className="form-request">
+          <h3 style={{color: 'green'}}>PICTURE UPLOAD</h3>
+          <p>Access Token</p>
+          <p>{userToken}</p>
+          <p>ID</p>
+          <p style={{marginTop: 0}}>{editedLocation && Object.values(editedLocation)[0]}</p>
+          <p>Soubor</p>
+          <input type="file" onChange={(e) => handleFileChange(e.target.files[0])} />
+          <button>UPLOAD</button>
+        </div>
       </div>
     </div>
   )

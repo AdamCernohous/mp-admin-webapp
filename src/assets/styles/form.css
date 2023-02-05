@@ -17,6 +17,11 @@
   flex-direction: column;
 }
 
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-select select {
   width: 100%;
 }
