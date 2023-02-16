@@ -10,10 +10,13 @@ function App() {
 
   useEffect(() => {
     axios.post('http://localhost:8080/api/User/Login', {
-      userName: "admin",
-      password: "admin"
+      userName: "adam",
+      password: "adam"
     })
-      .then(res => setUserToken(res.data.accessToken));
+      .then(res => {
+        setUserToken(res.data.accessToken);
+        console.log(res.data.accessToken);
+      });
   },[]);
 
   return (
@@ -33,40 +36,69 @@ function App() {
 
 const EditForm = ({selected, userToken}) => {
   var url = 'http://localhost:8080/api/Castle/AllCastles';
-  var updateUrl = 'http://localhost:8080/api/Castle/AllCastles';
   var pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
+  const [postUrl, setPostUrl] = useState('http://localhost:8080/api/Castle/CastleCreate');
+  const [updateUrl, setUpdateUrl] = useState('http://localhost:8080/api/Castle/AllCastles');
+  const [deleteUrl, setDeleteUrl] = useState('http://localhost:8080/api/');
 
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [selectedValue, setSelectedValue] = useState('');
   const [editedLocation, setEditedLocation] = useState(null);
+  const [postLocation, setPostLocation] = useState({
+    name: "",
+    description: "",
+    latitude: "",
+    longitude: ""
+  });
+
+  //const [imageBytes, setImageBytes] = useState();
+  var image;
+
+  axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
 
   const getData = () => {
     setIsLoading(true);
     switch(selected){
       case 0:
         url = 'http://localhost:8080/api/Castle/AllCastles';
+        setPostUrl('http://localhost:8080/api/Castle/CastleCreate');
+        setUpdateUrl('http://localhost:8080/api/Castle/Castle/Update');
         break;
       case 1:
         url = 'http://localhost:8080/api/Church/AllChurches';
+        setPostUrl('http://localhost:8080/api/Church/ChurchCreate');
+        setUpdateUrl('http://localhost:8080/api/Church/Church/Update');
         break;
       case 2:
         url = 'http://localhost:8080/api/Museum/AllMuseums';
+        setPostUrl('http://localhost:8080/api/Museum/MuseumCreate');
+        setUpdateUrl('http://localhost:8080/api/Museum/Museum/Update');
         break;
       case 3:
         url = 'http://localhost:8080/api/Outlook/AllOutlooks';
+        setPostUrl('http://localhost:8080/api/Outlook/OutlookCreate');
+        setUpdateUrl('http://localhost:8080/api/Outlook/Outlook/Update');
         break;
       case 4:
         url = 'http://localhost:8080/api/Park/AllParks';
+        setPostUrl('http://localhost:8080/api/Park/ParkCreate');
+        setUpdateUrl('http://localhost:8080/api/Park/Park/Update');
         break;
       case 5:
         url = 'http://localhost:8080/api/Restaurant/AllRestaurants';
+        setPostUrl('http://localhost:8080/api/Restaurant/RestaurantCreate');
+        setUpdateUrl('http://localhost:8080/api/Restaurant/Restaurant/Update');
         break;
       default:
         url = 'http://localhost:8080/api/Castle/AllCastles';
+        setPostUrl('http://localhost:8080/api/Castle/CastleCreate');
+        setUpdateUrl('http://localhost:8080/api/Castle/Castle/Update');
         break;
     }
+
+    console.log(postUrl);
   
     fetch(url)
       .then(response => response.json())
@@ -77,7 +109,7 @@ const EditForm = ({selected, userToken}) => {
 
   useEffect(() => {
     getData();
-  },[selected]);
+  },[selected, postUrl, updateUrl]);
 
   useEffect(() => {
     response.map(location => {
@@ -88,66 +120,150 @@ const EditForm = ({selected, userToken}) => {
     })
   }, [selectedValue]);
 
-  useEffect(() => {
-
-  },[editedLocation, selected])
+  const postData = () => {
+    console.log(postUrl);
+    axios.post(postUrl, postLocation)
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+  }
 
   const updateData = () => {
     switch(selected){
       case 0:
-        url = 'http://localhost:8080/api/Castle/AllCastles';
-        pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
+        axios.put(updateUrl, {
+          castleID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       case 1:
-        url = 'http://localhost:8080/api/Church/AllChurches';
-        pictureUrl = 'http://localhost:8080/api/Church/Picture/Upload';
+        axios.put(updateUrl, {
+          churchID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       case 2:
-        url = 'http://localhost:8080/api/Museum/AllMuseums';
-        pictureUrl = 'http://localhost:8080/api/Museum/Picture/Upload';
+        axios.put(updateUrl, {
+          museumID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       case 3:
-        url = 'http://localhost:8080/api/Outlook/AllOutlooks';
-        pictureUrl = 'http://localhost:8080/api/Outlook/Picture/Upload';
+        axios.put(updateUrl, {
+          outlookID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       case 4:
-        url = 'http://localhost:8080/api/Park/AllParks';
-        pictureUrl = 'http://localhost:8080/api/Park/Picture/Upload';
+        axios.put(updateUrl, {
+          parkID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       case 5:
-        url = 'http://localhost:8080/api/Restaurant/AllRestaurants';
-        pictureUrl = 'http://localhost:8080/api/Restaurant/Picture/Upload';
+        axios.put(updateUrl, {
+          restaurantID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
       default:
-        url = 'http://localhost:8080/api/Castle/AllCastles';
-        pictureUrl = 'http://localhost:8080/api/Castle/Picture/Upload';
+        axios.put(updateUrl, {
+          castleID: Object.values(editedLocation)[0],
+          name: editedLocation.name,
+          description: editedLocation.description,
+          latitude: editedLocation.latitude,
+          longitude: editedLocation.longitude
+        })
+          .then(res => console.log(res))
+          .catch(err => console.error(err));
         break;
     }
   }
 
+  // const handleFileChange = (file) => {
+  //   const reader = new FileReader();
+  
+  //   reader.readAsDataURL(file);
+  
+  //   reader.onloadend = () => {
+  //     const imageData = reader.result.split(',')[1];
+  //     const imageBytes = new Uint8Array(imageData.length);
+  //     var len = imageData.length;
+  //     for (let i = 0; i < imageData.length; i++) {
+  //       imageBytes[i] = imageData.charCodeAt(i);
+  //       console.log(len);
+  //       len--;
+  //     }
+  //     image = imageBytes;
+  //   };
+  // };
+
+  // const uploadImage = () => {
+  //   console.log(image);
+  //   axios.post('http://localhost:8080/api/Castle/Picture/Upload', {
+  //     castleId: Object.values(editedLocation)[0],
+  //     picture: image
+  //   }, {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then(res => console.log(res))
+  //     .catch(err => console.error(err));
+  // }
+
   const handleFileChange = (file) => {
     const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
+    reader.readAsDataURL(file);
+
     reader.onloadend = () => {
-      const byteArray = new Uint8Array(reader.result);
-
-      const encodedString = new TextEncoder().encode(byteArray);
-
-      console.log(encodedString);
-    
-      axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
-      axios.post(pictureUrl,{
-        castleId: Object.values(editedLocation)[0],
-        picture: encodedString
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
-        })
-        .catch((error) => {
-          console.warn(error)
-        });
+      const imageData = reader.result.split(',')[1];
+      image = imageData;
     };
+  };
+
+  const uploadImage = () => {
+    console.log(image);
+
+    axios.post("http://localhost:8080/api/Castle/Picture/Upload", {
+      castleId: Object.values(editedLocation)[0],
+      picture: image,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -194,6 +310,28 @@ const EditForm = ({selected, userToken}) => {
       </div>
       <div className="form-container-item right">
         <div className="form-request">
+          <h3 style={{color: "green"}}>POST</h3>
+          <p>Name</p>
+          <input
+            onChange={e => setPostLocation({...postLocation, name: e.target.value})}
+          />
+          <p>Description</p>
+          <textarea
+            onChange={e => setPostLocation({...postLocation, description: e.target.value})}
+          />
+          <p>Latitude</p>
+          <input
+            type={'number'}
+            onChange={e => setPostLocation({...postLocation, latitude: parseFloat(e.target.value)})}
+          />
+          <p>Longtitude</p>
+          <input
+            type={'number'}
+            onChange={e => setPostLocation({...postLocation, longitude: parseFloat(e.target.value)})}
+          />
+          <button onClick={() => postData(postUrl)}>POST</button>
+        </div>
+        <div className="form-request">
           <h3 style={{color: 'green'}}>PICTURE UPLOAD</h3>
           <p>Access Token</p>
           <p>{userToken}</p>
@@ -201,7 +339,8 @@ const EditForm = ({selected, userToken}) => {
           <p style={{marginTop: 0}}>{editedLocation && Object.values(editedLocation)[0]}</p>
           <p>Soubor</p>
           <input type="file" onChange={(e) => handleFileChange(e.target.files[0])} />
-          <button>UPLOAD</button>
+          <p>{image}</p>
+          <button onClick={() => uploadImage()}>UPLOAD</button>
         </div>
       </div>
     </div>
