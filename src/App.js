@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Tourist App admin console.</h1>
+      <h1>Admin App (Turistické destinace)</h1>
       <SliderMenu
         selected={selected}
         setSelected={setSelected}
