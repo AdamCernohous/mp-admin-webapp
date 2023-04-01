@@ -10,8 +10,8 @@ function App() {
 
   useEffect(() => {
     axios.post('http://localhost:8080/api/User/Login', {
-      userName: "adam",
-      password: "adam"
+      userName: "admin@admin.cz",
+      password: "Cernohous1,"
     })
       .then(res => {
         setUserToken(res.data.accessToken);
