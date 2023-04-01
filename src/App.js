@@ -3,21 +3,12 @@ import './assets/styles/sliderMenu.css';
 import './assets/styles/form.css';
 import './App.css';
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 function App() {
   const [selected, setSelected] = useState(0);
-  const [userToken, setUserToken] = useState();
 
-  useEffect(() => {
-    axios.post('https://aplikaceturistickedestinace.azurewebsites.net/api/User/Login', {
-      userName: "admin@admin.cz",
-      password: "Cernohous1,"
-    })
-      .then(res => {
-        setUserToken(res.data.accessToken);
-        console.log(res.data.accessToken);
-      });
-  },[]);
+  const { userToken } = useParams();
 
   return (
     <div className="App">
