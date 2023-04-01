@@ -9,7 +9,7 @@ function App() {
   const [userToken, setUserToken] = useState();
 
   useEffect(() => {
-    axios.post('http://localhost:8080/api/User/Login', {
+    axios.post('https://aplikaceturistickedestinace.azurewebsites.net/api/User/Login', {
       userName: "admin@admin.cz",
       password: "Cernohous1,"
     })
@@ -35,11 +35,11 @@ function App() {
 }
 
 const EditForm = ({selected, userToken}) => {
-  var url = 'http://localhost:8080/api/Castle/AllCastles';
-  const [postUrl, setPostUrl] = useState('http://localhost:8080/api/Castle/CastleCreate');
-  const [updateUrl, setUpdateUrl] = useState('http://localhost:8080/api/Castle/AllCastles');
-  const [deleteUrl, setDeleteUrl] = useState('http://localhost:8080/api/');
-  const [pictureUrl, setPictureUrl] = useState('http://localhost:8080/api/Castle/Castles/Pictures');
+  var url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/AllCastles';
+  const [postUrl, setPostUrl] = useState('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/CastleCreate');
+  const [updateUrl, setUpdateUrl] = useState('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/AllCastles');
+  const [deleteUrl, setDeleteUrl] = useState('https://aplikaceturistickedestinace.azurewebsites.net/api/');
+  const [pictureUrl, setPictureUrl] = useState('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Castles/Pictures');
 
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,46 +64,46 @@ const EditForm = ({selected, userToken}) => {
     setIsLoading(true);
     switch(selected){
       case 0:
-        url = 'http://localhost:8080/api/Castle/AllCastles';
-        setPostUrl('http://localhost:8080/api/Castle/CastleCreate');
-        setUpdateUrl('http://localhost:8080/api/Castle/Castle/Update');
-        setPictureUrl('http://localhost:8080/api/Castle/Castles/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/AllCastles';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/CastleCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Castle/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Castles/Pictures');
         break;
       case 1:
-        url = 'http://localhost:8080/api/Church/AllChurches';
-        setPostUrl('http://localhost:8080/api/Church/ChurchCreate');
-        setUpdateUrl('http://localhost:8080/api/Church/Church/Update');
-        setPictureUrl('http://localhost:8080/api/Church/Churches/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Church/AllChurches';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Church/ChurchCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Church/Church/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Church/Churches/Pictures');
         break;
       case 2:
-        url = 'http://localhost:8080/api/Museum/AllMuseums';
-        setPostUrl('http://localhost:8080/api/Museum/MuseumCreate');
-        setUpdateUrl('http://localhost:8080/api/Museum/Museum/Update');
-        setPictureUrl('http://localhost:8080/api/Museum/Museums/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Museum/AllMuseums';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Museum/MuseumCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Museum/Museum/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Museum/Museums/Pictures');
         break;
       case 3:
-        url = 'http://localhost:8080/api/Outlook/AllOutlooks';
-        setPostUrl('http://localhost:8080/api/Outlook/OutlookCreate');
-        setUpdateUrl('http://localhost:8080/api/Outlook/Outlook/Update');
-        setPictureUrl('http://localhost:8080/api/Outlook/Outlooks/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Outlook/AllOutlooks';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Outlook/OutlookCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Outlook/Outlook/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Outlook/Outlooks/Pictures');
         break;
       case 4:
-        url = 'http://localhost:8080/api/Park/AllParks';
-        setPostUrl('http://localhost:8080/api/Park/ParkCreate');
-        setUpdateUrl('http://localhost:8080/api/Park/Park/Update');
-        setPictureUrl('http://localhost:8080/api/Park/Parks/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Park/AllParks';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Park/ParkCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Park/Park/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Park/Parks/Pictures');
         break;
       case 5:
-        url = 'http://localhost:8080/api/Restaurant/AllRestaurants';
-        setPostUrl('http://localhost:8080/api/Restaurant/RestaurantCreate');
-        setUpdateUrl('http://localhost:8080/api/Restaurant/Restaurant/Update');
-        setPictureUrl('http://localhost:8080/api/Restaurant/Restaurants/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Restaurant/AllRestaurants';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Restaurant/RestaurantCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Restaurant/Restaurant/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Restaurant/Restaurants/Pictures');
         break;
       default:
-        url = 'http://localhost:8080/api/Castle/AllCastles';
-        setPostUrl('http://localhost:8080/api/Castle/CastleCreate');
-        setUpdateUrl('http://localhost:8080/api/Castle/Castle/Update');
-        setPictureUrl('http://localhost:8080/api/Castle/Castles/Pictures');
+        url = 'https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/AllCastles';
+        setPostUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/CastleCreate');
+        setUpdateUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Castle/Update');
+        setPictureUrl('https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Castles/Pictures');
         break;
     }
 
@@ -118,7 +118,7 @@ const EditForm = ({selected, userToken}) => {
 
   const getImages = () => {
     if(selectedValue != null){
-      axios.get('http://localhost:8080/api/User/Pictures/' + selectedValue)
+      axios.get('https://aplikaceturistickedestinace.azurewebsites.net/api/User/Pictures/' + selectedValue)
         .then(res => {setImages(Object.values(res.data)[0]);console.log(Object.values(res.data)[0])})
         .catch(err => console.error(err));
     }
@@ -146,7 +146,7 @@ const EditForm = ({selected, userToken}) => {
   }
 
   const deleteLocation = () => {
-    axios.delete('http://localhost:8080/api/User/Model/' + Object.values(editedLocation)[0])
+    axios.delete('https://aplikaceturistickedestinace.azurewebsites.net/api/User/Model/' + Object.values(editedLocation)[0])
       .then(res => console.log(res.data))
       .catch(err => console.error(err));
   }
@@ -248,7 +248,7 @@ const EditForm = ({selected, userToken}) => {
 
     switch(selected){
       case 0:
-        axios.post("http://localhost:8080/api/Castle/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Picture/Upload", {
           castleId: Object.values(editedLocation)[0],
           picture: image,
           }, {
@@ -260,7 +260,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       case 1:
-        axios.post("http://localhost:8080/api/Church/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Church/Picture/Upload", {
           churchID: Object.values(editedLocation)[0],
           picture: image,
           }, {
@@ -272,7 +272,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       case 2:
-        axios.post("http://localhost:8080/api/Museum/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Museum/Picture/Upload", {
           museumID: Object.values(editedLocation)[0],
           picture: image,
         }, {
@@ -284,7 +284,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       case 3:
-        axios.post("http://localhost:8080/api/Outlook/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Outlook/Picture/Upload", {
           outlookID: Object.values(editedLocation)[0],
           picture: image,
         }, {
@@ -296,7 +296,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       case 4:
-        axios.post("http://localhost:8080/api/Park/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Park/Picture/Upload", {
           parkID: Object.values(editedLocation)[0],
           picture: image,
         }, {
@@ -308,7 +308,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       case 5:
-        axios.post("http://localhost:8080/api/Restaurant/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Restaurant/Picture/Upload", {
           restaurantID: Object.values(editedLocation)[0],
           picture: image,
         }, {
@@ -320,7 +320,7 @@ const EditForm = ({selected, userToken}) => {
           .catch((err) => console.error(err));
         break;
       default:
-        axios.post("http://localhost:8080/api/Castle/Picture/Upload", {
+        axios.post("https://aplikaceturistickedestinace.azurewebsites.net/api/Castle/Picture/Upload", {
           castleId: Object.values(editedLocation)[0],
           picture: image,
         }, {
