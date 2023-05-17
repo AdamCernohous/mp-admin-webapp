@@ -49,6 +49,7 @@ const Login = () => {
         <p style={{textAlign: 'left'}}>Password</p>
         <input type={'password'} onChange={e => setPassword(e.target.value)} />
         <button style={{marginTop: '20px'}} onClick={() => {login();authorize();}}>Login</button>
+        <a style={{position: 'fixed', left: '20px', bottom: '20px'}} onClick={() => navigate('/termsandconditions')}>Terms and Conditions</a>
       </div>
     </div>
   );
